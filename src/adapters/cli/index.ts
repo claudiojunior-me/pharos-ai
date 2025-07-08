@@ -12,6 +12,8 @@ import { IAuthenticationService } from '../../application/ports/IAuthenticationS
 import { MediumAuthenticationAdapter } from '../../adapters/driven/MediumAuthenticationAdapter';
 import { IArticleContentService } from '../../application/ports/IArticleContentService';
 import { MediumScraper } from '../../adapters/driven/MediumScraper';
+import { ITaggingService } from '../../application/ports/ITaggingService';
+import { AiTaggingAdapter } from '../../adapters/driven/ai/AiTaggingAdapter';
 
 container.register<IArticleRepository>('IArticleRepository', {
   useClass: JsonArticleRepository,
@@ -23,6 +25,10 @@ container.register<IAuthenticationService>('IAuthenticationService', {
 
 container.register<IArticleContentService>('IArticleContentService', {
   useClass: MediumScraper,
+});
+
+container.register<ITaggingService>('ITaggingService', {
+  useClass: AiTaggingAdapter,
 });
 
 container.register<ICliService>('TagContentUseCase', {
