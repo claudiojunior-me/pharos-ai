@@ -14,6 +14,8 @@ import { IArticleContentService } from '../../application/ports/IArticleContentS
 import { MediumScraper } from '../../adapters/driven/MediumScraper';
 import { ITaggingService } from '../../application/ports/ITaggingService';
 import { AiTaggingAdapter } from '../../adapters/driven/ai/AiTaggingAdapter';
+import { IEmailService } from '../../application/ports/IEmailService';
+import { NodemailerEmailAdapter } from '../../adapters/driven/email/NodemailerEmailAdapter';
 
 container.register<IArticleRepository>('IArticleRepository', {
   useClass: JsonArticleRepository,
@@ -29,6 +31,10 @@ container.register<IArticleContentService>('IArticleContentService', {
 
 container.register<ITaggingService>('ITaggingService', {
   useClass: AiTaggingAdapter,
+});
+
+container.register<IEmailService>('IEmailService', {
+  useClass: NodemailerEmailAdapter,
 });
 
 container.register<ICliService>('TagContentUseCase', {
