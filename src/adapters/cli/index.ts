@@ -3,9 +3,13 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { container } from 'tsyringe';
 
+import 'reflect-metadata';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { container } from 'tsyringe';
+
 import { ICliService } from '../../application/ports/ICliService';
 import { IArticleRepository } from '../../application/ports/IArticleRepository';
-import { TagContentUseCase } from '../../application/usecases/TagContentUseCase';
 import { ExportContentUseCase } from '../../application/usecases/ExportContentUseCase';
 import { JsonArticleRepository } from '../../adapters/driven/JsonArticleRepository';
 import { IAuthenticationService } from '../../application/ports/IAuthenticationService';
@@ -22,6 +26,8 @@ import { ITranslationService } from '../../application/ports/ITranslationService
 import { GoogleTranslateAdapter } from '../../adapters/driven/GoogleTranslateAdapter';
 import { ISummarizationService } from '../../application/ports/ISummarizationService';
 import { LLMSummarizationAdapter } from '../../adapters/driven/LLMSummarizationAdapter';
+import { ITagCommand } from '../../application/ports/ITagCommand';
+import { TagCommand } from '../../commands/TagCommand';
 
 container.register<IArticleRepository>('IArticleRepository', {
   useClass: JsonArticleRepository,
@@ -55,9 +61,10 @@ container.register<ISummarizationService>('ISummarizationService', {
   useClass: LLMSummarizationAdapter,
 });
 
-container.register<ICliService>('TagContentUseCase', {
-  useClass: TagContentUseCase,
+container.register<ITagCommand>('ITagCommand', {
+  useClass: TagCommand,
 });
+
 container.register<ICliService>('ExportContentUseCase', {
   useClass: ExportContentUseCase,
 });
@@ -78,8 +85,8 @@ export const cli = yargs(hideBin(process.argv))
         });
     },
     async (argv) => {
-      const tagService = container.resolve<ICliService>('TagContentUseCase');
-      await tagService.tag(argv.source as string, argv.destination as string);
+      const tagCommand = container.resolve<ITagCommand>('ITagCommand');
+      await tagCommand.execute(argv.source as string, argv.destination as string);
     }
   )
   .command(

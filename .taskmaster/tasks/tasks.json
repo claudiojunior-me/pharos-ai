@@ -383,7 +383,7 @@
         "id": 7,
         "title": "Implement Tag Command Logic",
         "description": "Implement the Tag Command as a core use case in the Hexagonal Architecture that orchestrates article tagging workflow through port interfaces",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           3,
           5,
@@ -397,7 +397,7 @@
             "id": 1,
             "title": "Define Tag Command Use Case Interface",
             "description": "Create the port interface for the Tag Command use case that defines the contract for the core business logic",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -406,7 +406,7 @@
             "id": 2,
             "title": "Implement Core Tag Command Logic",
             "description": "Implement the tag command as a pure business logic component that orchestrates the tagging workflow through port interfaces",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -415,7 +415,7 @@
             "id": 3,
             "title": "Implement Article Comparison Logic",
             "description": "Create core business logic to identify new articles by comparing current reading list with existing state",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -424,7 +424,7 @@
             "id": 4,
             "title": "Add Progress Tracking and Error Handling",
             "description": "Implement progress indicators and comprehensive error handling for each step of the tagging workflow",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -433,7 +433,7 @@
             "id": 5,
             "title": "Wire Tag Command to CLI Adapter",
             "description": "Connect the tag command use case to the CLI driving adapter through dependency injection",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -442,7 +442,7 @@
             "id": 6,
             "title": "Create Unit Tests for Tag Command Use Case",
             "description": "Write comprehensive unit tests for the tag command using mocked port implementations to verify business logic",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -453,7 +453,7 @@
         "id": 8,
         "title": "Implement Content Processing Pipeline",
         "description": "Create a core content processing service following Hexagonal Architecture principles, utilizing driven adapters for HTML to Markdown conversion, translation, and summarization through well-defined ports",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           1,
           6
@@ -833,7 +833,7 @@
     ],
     "metadata": {
       "created": "2025-07-08T04:09:43.481Z",
-      "updated": "2025-07-08T17:01:57.202Z",
+      "updated": "2025-07-08T17:14:38.915Z",
       "description": "Tasks for master context"
     }
   }
