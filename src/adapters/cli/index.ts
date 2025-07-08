@@ -16,6 +16,12 @@ import { ITaggingService } from '../../application/ports/ITaggingService';
 import { AiTaggingAdapter } from '../../adapters/driven/ai/AiTaggingAdapter';
 import { IEmailService } from '../../application/ports/IEmailService';
 import { NodemailerEmailAdapter } from '../../adapters/driven/email/NodemailerEmailAdapter';
+import { IMarkdownConverter } from '../../application/ports/IMarkdownConverter';
+import { TurndownMarkdownAdapter } from '../../adapters/driven/TurndownMarkdownAdapter';
+import { ITranslationService } from '../../application/ports/ITranslationService';
+import { GoogleTranslateAdapter } from '../../adapters/driven/GoogleTranslateAdapter';
+import { ISummarizationService } from '../../application/ports/ISummarizationService';
+import { LLMSummarizationAdapter } from '../../adapters/driven/LLMSummarizationAdapter';
 
 container.register<IArticleRepository>('IArticleRepository', {
   useClass: JsonArticleRepository,
@@ -35,6 +41,18 @@ container.register<ITaggingService>('ITaggingService', {
 
 container.register<IEmailService>('IEmailService', {
   useClass: NodemailerEmailAdapter,
+});
+
+container.register<IMarkdownConverter>('IMarkdownConverter', {
+  useClass: TurndownMarkdownAdapter,
+});
+
+container.register<ITranslationService>('ITranslationService', {
+  useClass: GoogleTranslateAdapter,
+});
+
+container.register<ISummarizationService>('ISummarizationService', {
+  useClass: LLMSummarizationAdapter,
 });
 
 container.register<ICliService>('TagContentUseCase', {
