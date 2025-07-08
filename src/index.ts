@@ -1,1 +1,3 @@
-console.log('Hello, world!');
+import { cli } from './adapters/cli';
+
+cli;

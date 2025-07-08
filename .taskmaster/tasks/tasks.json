@@ -82,7 +82,7 @@
             "id": 1,
             "title": "Create CLI adapter structure following Hexagonal Architecture",
             "description": "Set up the CLI adapter directory structure and main entry point that follows hexagonal architecture principles",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -833,7 +833,7 @@
     ],
     "metadata": {
       "created": "2025-07-08T04:09:43.481Z",
-      "updated": "2025-07-08T11:58:50.533Z",
+      "updated": "2025-07-08T16:25:16.253Z",
       "description": "Tasks for master context"
     }
   }
