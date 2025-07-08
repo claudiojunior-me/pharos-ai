@@ -4,8 +4,14 @@ import { hideBin } from 'yargs/helpers';
 import { container } from 'tsyringe';
 
 import { ICliService } from '../../application/ports/ICliService';
+import { IArticleRepository } from '../../application/ports/IArticleRepository';
 import { TagContentUseCase } from '../../application/usecases/TagContentUseCase';
 import { ExportContentUseCase } from '../../application/usecases/ExportContentUseCase';
+import { JsonArticleRepository } from '../../adapters/driven/JsonArticleRepository';
+
+container.register<IArticleRepository>('IArticleRepository', {
+  useClass: JsonArticleRepository,
+});
 
 container.register<ICliService>('TagContentUseCase', {
   useClass: TagContentUseCase,
