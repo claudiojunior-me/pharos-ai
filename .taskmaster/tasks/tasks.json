@@ -9,7 +9,7 @@
         "testStrategy": "Verify project compiles with 'npx tsc'. Test CLI entry point with 'npx ts-node src/index.ts --help'. Ensure all dependencies install correctly.",
         "priority": "high",
         "dependencies": [],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -61,7 +61,7 @@
               4
             ],
             "details": "Create .gitignore file excluding: node_modules/, dist/, .env, *.log, .DS_Store, coverage/, .nyc_output/. Add IDE-specific exclusions for .vscode/, .idea/. Include OS-specific exclusions. Initialize git repository with 'git init' and create initial commit with project structure.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Verify .gitignore properly excludes sensitive files by checking 'git status' shows only intended files for tracking"
           }
         ]
@@ -69,146 +69,658 @@
       {
         "id": 2,
         "title": "Implement CLI Framework with Yargs",
-        "description": "Create main CLI interface with tag and export commands using yargs framework",
-        "details": "Setup src/index.ts as main entry point using yargs. Implement command structure for 'tag' command and 'export' command with --theme and --count parameters. Add help text and command validation. Create command handlers in src/commands/tag.ts and src/commands/export.ts.",
-        "testStrategy": "Test CLI commands: 'npx ts-node src/index.ts tag', 'npx ts-node src/index.ts export --theme rust --count 5'. Verify help text displays correctly and parameter validation works.",
-        "priority": "high",
+        "description": "Create main CLI interface with tag and export commands using yargs framework as an adapter in the Hexagonal Architecture. The CLI should act as a driving adapter that interacts with the application core through well-defined interfaces, following the Dependency Inversion Principle.",
+        "status": "pending",
         "dependencies": [
           1
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "high",
+        "details": "Setup src/index.ts as main entry point using yargs as a driving adapter. Implement command structure for 'tag' command and 'export' command with --theme and --count parameters. Create command handlers in src/adapters/cli/commands/ that depend on abstractions (interfaces) rather than concrete implementations. The CLI commands should invoke use cases through dependency injection, ensuring the core application logic remains independent of the CLI framework. Implement proper error handling and validation at the adapter level. Add help text and command validation.",
+        "testStrategy": "Test CLI commands: 'npx ts-node src/index.ts tag', 'npx ts-node src/index.ts export --theme rust --count 5'. Verify help text displays correctly, parameter validation works, and commands properly invoke use cases through interfaces. Test that the CLI adapter correctly handles errors from the application core and presents them appropriately to the user.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create CLI adapter structure following Hexagonal Architecture",
+            "description": "Set up the CLI adapter directory structure and main entry point that follows hexagonal architecture principles",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Define CLI command interfaces and abstractions",
+            "description": "Create interfaces that the CLI adapter will use to interact with use cases, ensuring dependency inversion",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement yargs configuration and command routing",
+            "description": "Set up yargs in src/index.ts with proper command routing that delegates to use case interfaces",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create tag command CLI adapter",
+            "description": "Implement tag command handler that invokes tag use case through defined interfaces",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create export command CLI adapter",
+            "description": "Implement export command handler with --theme and --count parameters that invokes export use case through defined interfaces",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement dependency injection for CLI commands",
+            "description": "Set up dependency injection mechanism to provide use case implementations to CLI command handlers",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Add CLI error handling and validation",
+            "description": "Implement proper error handling that translates application core errors to user-friendly CLI messages",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 3,
         "title": "Implement State Management Service",
-        "description": "Create articles.json persistence layer for tracking article state and tags",
-        "details": "Create src/services/state.ts with functions to read/write articles.json. Define Article interface in src/types/article.ts with properties: url, title, tags[], processed boolean. Implement loadArticles(), saveArticles(), addArticle(), updateArticle() functions with error handling for file operations.",
-        "testStrategy": "Unit tests for state operations. Test file creation, reading empty/existing files, adding articles, updating processed status. Verify JSON structure matches Article interface.",
-        "priority": "high",
+        "description": "Create a driven adapter for article persistence that implements the repository port interface, following Hexagonal Architecture principles",
+        "status": "pending",
         "dependencies": [
           1
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "high",
+        "details": "Implement the persistence layer as a driven adapter that adheres to Dependency Inversion Principle. Create src/ports/article-repository.ts defining the ArticleRepository interface (port) with methods: loadArticles(), saveArticles(), addArticle(), updateArticle(). Implement src/adapters/driven/json-article-repository.ts as the concrete adapter that handles articles.json file operations. Define Article interface in src/types/article.ts with properties: url, title, tags[], processed boolean. The core application should depend only on the port interface, not the concrete implementation. Include proper error handling for file operations.",
+        "testStrategy": "Unit tests for both the port interface contract and the concrete JSON adapter implementation. Test file creation, reading empty/existing files, adding articles, updating processed status. Verify JSON structure matches Article interface. Mock the repository interface for testing core logic independently of persistence implementation.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Article interface and types",
+            "description": "Create src/types/article.ts with Article interface containing url, title, tags[], and processed properties",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create ArticleRepository port interface",
+            "description": "Define src/ports/article-repository.ts with ArticleRepository interface containing loadArticles(), saveArticles(), addArticle(), and updateArticle() method signatures",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement JSON Article Repository adapter",
+            "description": "Create src/adapters/driven/json-article-repository.ts that implements ArticleRepository interface for articles.json file operations with proper error handling",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add dependency injection setup",
+            "description": "Ensure the core application can receive the repository implementation through dependency injection, maintaining loose coupling",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 4,
         "title": "Implement Medium Authentication Service",
-        "description": "Create secure authentication service for Medium using Puppeteer with environment variables",
-        "details": "Create src/services/auth.ts using Puppeteer for Medium login. Load credentials from process.env.MEDIUM_USERNAME and MEDIUM_PASSWORD. Implement login flow with proper error handling. Maintain session cookies throughout execution. Add User-Agent rotation and realistic delays to avoid detection.",
-        "testStrategy": "Test login with valid credentials from .env file. Verify session persistence by accessing a paid article. Test error handling for invalid credentials and network failures.",
-        "priority": "high",
+        "description": "Create secure authentication service for Medium as a driven adapter in Hexagonal Architecture, implementing a defined port interface to provide authentication capabilities to the core application",
+        "status": "pending",
         "dependencies": [
           1
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "high",
+        "details": "Implement a Medium authentication service following Hexagonal Architecture principles. Create an authentication port (interface) in src/core/ports/AuthenticationPort.ts that defines the contract for authentication operations. Implement the concrete Medium authentication adapter in src/adapters/driven/MediumAuthenticationAdapter.ts using Puppeteer for Medium login. The adapter should load credentials from process.env.MEDIUM_USERNAME and MEDIUM_PASSWORD, implement login flow with proper error handling, maintain session cookies throughout execution, and add User-Agent rotation and realistic delays to avoid detection. The core application should depend only on the port interface, not the concrete implementation, adhering to the Dependency Inversion Principle.",
+        "testStrategy": "Test the authentication port interface with mock implementations. Test the Medium authentication adapter with valid credentials from .env file. Verify session persistence by accessing a paid article through the adapter. Test error handling for invalid credentials and network failures. Ensure the core application can work with different authentication implementations through the port interface.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Authentication Port Interface",
+            "description": "Create the authentication port interface that defines the contract for authentication operations",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/core/ports/AuthenticationPort.ts with interface defining methods like authenticate(), isAuthenticated(), getSession(), etc. Include proper TypeScript types for authentication results and error handling.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Medium Authentication Adapter",
+            "description": "Create the concrete Medium authentication adapter that implements the authentication port",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Implement src/adapters/driven/MediumAuthenticationAdapter.ts that implements the AuthenticationPort interface. Use Puppeteer for Medium login, load credentials from environment variables, implement proper error handling, session management, and anti-detection measures.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure Dependency Injection",
+            "description": "Set up dependency injection to wire the authentication adapter to the core through the port interface",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Configure the dependency injection container to bind the AuthenticationPort interface to the MediumAuthenticationAdapter implementation, ensuring the core application depends only on the interface.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add Authentication Integration Tests",
+            "description": "Create integration tests that verify the authentication adapter works correctly with the Medium platform",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Test authentication flow end-to-end, session persistence, error scenarios, and verify the adapter correctly implements the port interface contract.",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 5,
         "title": "Implement Medium Scraping Service",
-        "description": "Create service to extract reading list and article content from Medium",
-        "details": "Create src/services/medium.ts with functions to scrape reading list and extract article content. Implement getReadingList() to fetch all articles from user's reading list. Implement getArticleContent(url) to extract full article text. Use configurable CSS selectors stored in config file. Add delays and error handling for scraping operations.",
-        "testStrategy": "Test reading list extraction returns array of articles with URLs and titles. Test article content extraction returns clean text. Verify scraping works with both free and paid articles.",
-        "priority": "medium",
+        "description": "Create a Medium scraping service as a driven adapter that implements the article content port interface, following Hexagonal Architecture principles and the Dependency Inversion Principle",
+        "status": "pending",
         "dependencies": [
           4
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Implement a Medium scraping service as a driven adapter in the hexagonal architecture. Create src/adapters/driven/medium-scraper.ts that implements the ArticleContentPort interface defined in src/ports/driven/article-content-port.ts. The service should provide getReadingList() to fetch all articles from user's reading list and getArticleContent(url) to extract full article text. Use configurable CSS selectors stored in config file. Add delays and error handling for scraping operations. The core application should depend only on the port interface, not the concrete implementation, ensuring loose coupling and testability.",
+        "testStrategy": "Test that the Medium scraper correctly implements the ArticleContentPort interface. Test reading list extraction returns array of articles with URLs and titles. Test article content extraction returns clean text. Verify scraping works with both free and paid articles. Test that the core application can use the service through the port interface without knowing the concrete implementation.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define ArticleContentPort interface",
+            "description": "Create the port interface that defines the contract for article content providers",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/ports/driven/article-content-port.ts with interface defining getReadingList() and getArticleContent(url) methods. This interface will be implemented by the Medium scraper and any other article content adapters.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Medium scraper as driven adapter",
+            "description": "Create the concrete implementation of the ArticleContentPort using Medium scraping",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/adapters/driven/medium-scraper.ts that implements ArticleContentPort. Include getReadingList() to fetch articles from user's reading list and getArticleContent(url) to extract full article text. Use configurable CSS selectors and include proper error handling and delays.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure dependency injection for the adapter",
+            "description": "Set up dependency injection to wire the Medium scraper to the core application",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Configure the dependency injection container to bind the ArticleContentPort interface to the MediumScraper implementation. Ensure the core application receives the adapter through constructor injection without knowing the concrete type.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add configuration for CSS selectors",
+            "description": "Create configuration file for Medium-specific scraping selectors",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Add Medium scraping configuration to config file with CSS selectors for article content, titles, reading list items, etc. Make selectors easily configurable for maintenance.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement error handling and rate limiting",
+            "description": "Add robust error handling and rate limiting to the scraper",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Implement retry logic, timeout handling, and rate limiting in the Medium scraper. Add proper error types that can be handled by the core application through the port interface.",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 6,
         "title": "Implement AI Tagging Service",
-        "description": "Create service to generate tags for articles using LLM API (Gemini/OpenAI)",
-        "details": "Create src/services/ai.ts with generateTags(articleText) function. Integrate with Google AI (Gemini) or OpenAI API using environment variables for API keys. Design prompt to analyze article content and return JSON array of relevant tags. Implement error handling and retry logic for API calls. Add rate limiting to avoid API quota issues.",
-        "testStrategy": "Test tag generation with sample article text. Verify returned tags are relevant and in correct JSON format. Test error handling for API failures and invalid responses.",
-        "priority": "medium",
+        "description": "Create AI tagging service as a driven adapter following Hexagonal Architecture principles. Implement a port (interface) for tagging capabilities and a concrete adapter that integrates with LLM APIs (Gemini/OpenAI), ensuring the core application depends only on the abstraction.",
+        "status": "pending",
         "dependencies": [
           1
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Following Hexagonal Architecture and Dependency Inversion Principle: 1) Create src/core/ports/TaggingPort.ts interface defining generateTags(articleText) contract. 2) Implement src/adapters/driven/ai/AiTaggingAdapter.ts as concrete implementation using Google AI (Gemini) or OpenAI API. 3) Configure dependency injection to bind the port to the adapter. 4) Use environment variables for API keys and configuration. 5) Design effective prompts to analyze article content and return JSON array of relevant tags. 6) Implement comprehensive error handling, retry logic, and rate limiting. 7) Ensure core domain never directly imports or depends on the concrete AI adapter implementation.",
+        "testStrategy": "Test the TaggingPort interface contract with mock implementations. Test AiTaggingAdapter with sample article text, verifying returned tags are relevant and in correct JSON format. Test error handling for API failures, invalid responses, and rate limiting scenarios. Verify dependency injection configuration correctly binds port to adapter. Ensure core domain tests can run without external AI service dependencies.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define TaggingPort interface",
+            "description": "Create the port interface that defines the contract for tagging services",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/core/ports/TaggingPort.ts with generateTags(articleText: string): Promise<string[]> method signature. Include proper TypeScript types and JSDoc documentation.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement AiTaggingAdapter",
+            "description": "Create concrete implementation of TaggingPort using AI services",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Implement src/adapters/driven/ai/AiTaggingAdapter.ts that implements TaggingPort interface. Integrate with Google AI (Gemini) or OpenAI API using environment variables for configuration.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Design AI prompts for tag generation",
+            "description": "Create effective prompts for analyzing article content and generating relevant tags",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Design prompts that instruct the AI to analyze article content and return a JSON array of relevant, concise tags. Include examples and constraints in the prompt.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement error handling and resilience",
+            "description": "Add comprehensive error handling, retry logic, and rate limiting",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Implement retry logic for transient failures, proper error handling for API errors, and rate limiting to respect API quotas. Include circuit breaker pattern if needed.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Configure dependency injection",
+            "description": "Set up dependency injection to bind TaggingPort to AiTaggingAdapter",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Configure the DI container to inject AiTaggingAdapter when TaggingPort is requested. Ensure core domain services receive the port interface, not the concrete implementation.",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create unit tests for TaggingPort contract",
+            "description": "Test the interface contract with mock implementations",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create tests that verify the TaggingPort interface contract works correctly with mock implementations, ensuring core domain logic is testable without external dependencies.",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create integration tests for AiTaggingAdapter",
+            "description": "Test the concrete AI adapter implementation",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create integration tests for AiTaggingAdapter with real or mocked AI API calls. Test tag generation quality, error scenarios, and rate limiting behavior.",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 7,
         "title": "Implement Tag Command Logic",
-        "description": "Complete tag command to identify new articles and generate tags using AI",
-        "details": "Implement src/commands/tag.ts logic: 1) Load existing articles from state, 2) Fetch current reading list from Medium, 3) Identify new articles not in state, 4) Extract content for new articles, 5) Generate tags using AI service, 6) Save updated articles to state. Add progress indicators and error handling.",
-        "testStrategy": "Test tag command identifies new articles correctly. Verify tags are generated and saved to articles.json. Test handling of articles already processed. Verify command completes without errors.",
-        "priority": "medium",
+        "description": "Implement the Tag Command as a core use case in the Hexagonal Architecture that orchestrates article tagging workflow through port interfaces",
+        "status": "pending",
         "dependencies": [
           3,
           5,
           6
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Implement src/commands/tag.ts as a core business logic component following Hexagonal Architecture principles. The command should act as a use case that orchestrates interactions between driving adapters (CLI) and driven adapters through their respective ports. Implementation: 1) Use StatePort interface to load existing articles, 2) Use ScrapingPort interface to fetch current reading list from Medium, 3) Implement core logic to identify new articles not in state, 4) Use ScrapingPort to extract content for new articles, 5) Use AITaggingPort interface to generate tags, 6) Use StatePort to save updated articles. The command should contain pure business logic with no direct dependencies on external services - all interactions go through port interfaces. Add progress indicators and comprehensive error handling.",
+        "testStrategy": "Test tag command as a use case with mocked port implementations. Verify correct orchestration of port interactions. Test identification of new articles through business logic. Verify tags are generated via AITaggingPort and saved via StatePort. Test error handling scenarios for each port interaction. Ensure command contains only core business logic with no external service dependencies.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Tag Command Use Case Interface",
+            "description": "Create the port interface for the Tag Command use case that defines the contract for the core business logic",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Core Tag Command Logic",
+            "description": "Implement the tag command as a pure business logic component that orchestrates the tagging workflow through port interfaces",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Article Comparison Logic",
+            "description": "Create core business logic to identify new articles by comparing current reading list with existing state",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add Progress Tracking and Error Handling",
+            "description": "Implement progress indicators and comprehensive error handling for each step of the tagging workflow",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Wire Tag Command to CLI Adapter",
+            "description": "Connect the tag command use case to the CLI driving adapter through dependency injection",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create Unit Tests for Tag Command Use Case",
+            "description": "Write comprehensive unit tests for the tag command using mocked port implementations to verify business logic",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 8,
         "title": "Implement Content Processing Pipeline",
-        "description": "Create services for HTML to Markdown conversion, translation, and summarization",
-        "details": "Create src/services/processor.ts with functions: 1) convertToMarkdown(html) using turndown library, 2) translateText(text) using translation API (Google Translate), 3) generateSummary(text) using LLM API for TL;DR generation. Load API keys from environment variables. Implement error handling and retry logic.",
-        "testStrategy": "Test HTML to Markdown conversion produces clean output. Test translation from English to Portuguese. Test summary generation creates concise TL;DR. Verify all functions handle errors gracefully.",
-        "priority": "medium",
+        "description": "Create a core content processing service following Hexagonal Architecture principles, utilizing driven adapters for HTML to Markdown conversion, translation, and summarization through well-defined ports",
+        "status": "pending",
         "dependencies": [
           1,
           6
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Implement the content processing pipeline as a core business service in src/core/services/ContentProcessingService.ts. Define ports (interfaces) in src/core/ports/ for: IMarkdownConverter, ITranslationService, and ISummarizationService. Create driven adapters in src/adapters/driven/ implementing these ports: TurndownMarkdownAdapter (using turndown library), GoogleTranslateAdapter (using Google Translate API), and LLMSummarizationAdapter (using LLM API). The core service should orchestrate these adapters through dependency injection, implementing business logic for content processing workflows. Load API keys from environment variables in adapters. Implement comprehensive error handling and retry logic in both core service and adapters.",
+        "testStrategy": "Unit test the core ContentProcessingService with mocked adapters to verify business logic. Test each adapter independently: TurndownMarkdownAdapter produces clean Markdown output, GoogleTranslateAdapter translates English to Portuguese correctly, LLMSummarizationAdapter generates concise summaries. Integration tests should verify the complete pipeline workflow. Test error handling and retry mechanisms across all layers.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define core ports (interfaces) for content processing",
+            "description": "Create interface definitions for IMarkdownConverter, ITranslationService, and ISummarizationService in src/core/ports/",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement ContentProcessingService core business logic",
+            "description": "Create src/core/services/ContentProcessingService.ts that orchestrates content processing through injected port implementations",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create TurndownMarkdownAdapter driven adapter",
+            "description": "Implement IMarkdownConverter using turndown library in src/adapters/driven/TurndownMarkdownAdapter.ts",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create GoogleTranslateAdapter driven adapter",
+            "description": "Implement ITranslationService using Google Translate API in src/adapters/driven/GoogleTranslateAdapter.ts with environment variable configuration",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create LLMSummarizationAdapter driven adapter",
+            "description": "Implement ISummarizationService using LLM API in src/adapters/driven/LLMSummarizationAdapter.ts with environment variable configuration",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement error handling and retry logic",
+            "description": "Add comprehensive error handling and retry mechanisms to both core service and all driven adapters",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create dependency injection configuration",
+            "description": "Set up dependency injection to wire core service with concrete adapter implementations",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 9,
         "title": "Implement Email Service for Kindle Delivery",
-        "description": "Create service to send processed articles to Kindle via email using Nodemailer",
-        "details": "Create src/services/email.ts using Nodemailer. Configure SMTP settings from environment variables (EMAIL_HOST, EMAIL_USER, EMAIL_PASS). Implement sendToKindle(title, content, theme) function. Format email with theme prefix in subject line: '[theme] - Article Title'. Attach content as .txt or .mobi file. Add delivery confirmation.",
-        "testStrategy": "Test email sending to Kindle address with sample content. Verify theme prefix appears in subject. Test error handling for SMTP failures. Confirm articles appear on Kindle device.",
-        "priority": "medium",
+        "description": "Implement email service for Kindle delivery following Hexagonal Architecture principles as a driven adapter with a defined port interface",
+        "status": "pending",
         "dependencies": [
           1
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Create an email service as a driven adapter that implements a port interface for sending articles to Kindle devices. The implementation should follow the Dependency Inversion Principle where the core application depends on abstractions, not concrete implementations.\n\n1. Define port interface (IEmailService) in src/core/ports/email.port.ts with sendToKindle method\n2. Implement driven adapter in src/adapters/driven/email/nodemailer-email.adapter.ts using Nodemailer\n3. Configure SMTP settings from environment variables (EMAIL_HOST, EMAIL_USER, EMAIL_PASS)\n4. Format email with theme prefix in subject line: '[theme] - Article Title'\n5. Attach content as .txt or .mobi file\n6. Add delivery confirmation\n7. Register adapter in dependency injection container\n8. Ensure core application uses only the port interface, never the concrete implementation",
+        "testStrategy": "Test the port interface with mock implementations to verify core logic. Test the Nodemailer adapter implementation separately with real SMTP configuration. Verify email sending to Kindle address with sample content and theme prefix in subject. Test error handling for SMTP failures. Confirm articles appear on Kindle device. Validate that core application remains decoupled from email implementation details.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Email Port Interface",
+            "description": "Create the port interface that defines the contract for email services",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/core/ports/email.port.ts with IEmailService interface. Define sendToKindle(title: string, content: string, theme: string, recipientEmail: string) method signature. Include proper TypeScript types for parameters and return values (Promise<boolean> for success/failure).",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Nodemailer Email Adapter",
+            "description": "Create the driven adapter that implements the email port using Nodemailer",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/adapters/driven/email/nodemailer-email.adapter.ts that implements IEmailService. Use Nodemailer for SMTP functionality. Configure from environment variables (EMAIL_HOST, EMAIL_USER, EMAIL_PASS). Implement sendToKindle method with theme prefix formatting and file attachment capabilities.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure Dependency Injection",
+            "description": "Register the email adapter in the DI container",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Update dependency injection configuration to bind IEmailService to NodemailerEmailAdapter. Ensure the core application can receive the email service through constructor injection without knowing the concrete implementation.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add Email Configuration Types",
+            "description": "Define TypeScript types for email configuration",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create types for email configuration including SMTP settings, attachment options, and delivery confirmation. Ensure type safety across the email service implementation.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Error Handling",
+            "description": "Add comprehensive error handling for email operations",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Implement proper error handling in the email adapter for SMTP failures, network issues, and configuration problems. Define custom error types that can be handled appropriately by the core application.",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 10,
         "title": "Implement Export Command Logic",
-        "description": "Complete export command to process and send articles based on theme and count filters",
-        "details": "Implement src/commands/export.ts logic: 1) Load articles from state, 2) Filter by theme and count parameters, 3) Select only unprocessed articles, 4) For each article: convert to Markdown, translate, summarize, 5) Send to Kindle via email, 6) Update processed status in state. Add progress tracking and error recovery.",
-        "testStrategy": "Test export command filters articles correctly by theme and count. Verify processing pipeline works end-to-end. Test articles are marked as processed after successful export. Verify error handling for failed exports.",
-        "priority": "medium",
+        "description": "Implement the Export Command as a core use case in the hexagonal architecture that orchestrates article processing and export through well-defined ports and adapters",
+        "status": "pending",
         "dependencies": [
           3,
           8,
           9
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Implement src/core/usecases/ExportArticlesUseCase.ts as the central business logic component that: 1) Uses StatePort to load articles from state, 2) Applies theme and count filters using domain logic, 3) Selects only unprocessed articles, 4) For each article: orchestrates content processing through ContentProcessingPort (convert to Markdown, translate, summarize), 5) Sends to Kindle via EmailPort, 6) Updates processed status through StatePort. The use case should be pure business logic with no dependencies on external frameworks. Add progress tracking and error recovery as domain concerns. This component will be called by the CLI adapter (driving) and will interact with State Management, Content Processing, and Email Service adapters (driven) through their respective ports.",
+        "testStrategy": "Unit test the ExportArticlesUseCase in isolation using mock implementations of all ports. Test export filters articles correctly by theme and count. Verify the orchestration logic works end-to-end with proper port interactions. Test articles are marked as processed after successful export. Verify error handling and recovery mechanisms. Test that the use case remains framework-agnostic and contains only business logic.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define ExportArticlesUseCase interface and dependencies",
+            "description": "Create the main use case class with constructor injection of required ports (StatePort, ContentProcessingPort, EmailPort)",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement article filtering and selection logic",
+            "description": "Add domain logic to filter articles by theme and count parameters, ensuring only unprocessed articles are selected",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement article processing orchestration",
+            "description": "Orchestrate the content processing pipeline through ContentProcessingPort (Markdown conversion, translation, summarization)",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement email sending and state updates",
+            "description": "Send processed articles via EmailPort and update processed status through StatePort with proper error handling",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add progress tracking and error recovery",
+            "description": "Implement domain-level progress tracking and error recovery mechanisms as pure business logic",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create comprehensive unit tests",
+            "description": "Write isolated unit tests using mock port implementations to verify all business logic scenarios",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 11,
         "title": "Implement Article Cleanup Service",
-        "description": "Create service to remove articles from Medium reading list after successful export",
-        "details": "Create src/services/cleanup.ts with removeFromReadingList(articleUrl) function. Use Puppeteer to navigate to article and click remove button. Implement robust selector strategy with fallbacks. Add confirmation of removal. Integrate cleanup into export command after successful Kindle delivery.",
-        "testStrategy": "Test article removal from reading list works correctly. Verify article no longer appears in reading list after removal. Test error handling when remove button not found or action fails.",
-        "priority": "low",
+        "description": "Create a core use case service following Hexagonal Architecture to remove articles from Medium reading list after successful export",
+        "status": "pending",
         "dependencies": [
           4,
           10
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "low",
+        "details": "Implement the Article Cleanup Service as a core business logic component in src/core/use-cases/cleanup-article.ts. Create the CleanupArticleUseCase class that depends on a MediumScrapingPort interface for article removal operations. The use case should orchestrate the cleanup process by calling the port's removeFromReadingList method. Create the corresponding port interface in src/core/ports/medium-scraping.port.ts. The existing Medium scraping adapter should implement this port to provide the actual removal functionality using Puppeteer. Integrate the cleanup use case into the export command workflow after successful Kindle delivery, following dependency injection patterns.",
+        "testStrategy": "Unit test the CleanupArticleUseCase in isolation using mocked ports. Test that the use case correctly calls the port's removeFromReadingList method. Verify error handling when the port throws exceptions. Integration test the complete flow from export command through cleanup use case to Medium adapter. Test that articles are actually removed from reading list and no longer appear after cleanup.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create MediumScrapingPort interface",
+            "description": "Define the port interface for Medium scraping operations including article removal",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/core/ports/medium-scraping.port.ts with MediumScrapingPort interface. Include removeFromReadingList(articleUrl: string): Promise<void> method. Add proper TypeScript types and JSDoc documentation.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement CleanupArticleUseCase",
+            "description": "Create the core use case class for article cleanup business logic",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create src/core/use-cases/cleanup-article.ts with CleanupArticleUseCase class. Inject MediumScrapingPort dependency through constructor. Implement execute method that takes article URL and orchestrates cleanup. Add proper error handling and logging.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Update Medium adapter to implement port",
+            "description": "Modify existing Medium scraping service to implement the MediumScrapingPort interface",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Update the Medium scraping adapter to implement MediumScrapingPort. Move existing Puppeteer-based removal logic into the removeFromReadingList method. Ensure robust selector strategy with fallbacks and confirmation of removal.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Integrate cleanup use case into export command",
+            "description": "Wire the cleanup use case into the export workflow using dependency injection",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Update the export command to inject CleanupArticleUseCase with proper Medium adapter dependency. Call cleanup use case after successful Kindle delivery. Implement proper error handling to ensure export success is not affected by cleanup failures.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add unit tests for CleanupArticleUseCase",
+            "description": "Create comprehensive unit tests for the cleanup use case",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create test file for CleanupArticleUseCase with mocked MediumScrapingPort. Test successful cleanup flow, error handling when port throws exceptions, and proper method calls to the port interface.",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 12,
         "title": "Add Error Handling and Configuration Management",
-        "description": "Implement comprehensive error handling, logging, and configurable settings",
-        "details": "Create src/services/config.ts for managing CSS selectors and delays. Implement src/services/logger.ts for structured logging. Add try-catch blocks throughout application with meaningful error messages. Create configuration file for selectors, delays, and API limits. Add dry-run mode for testing. Implement graceful shutdown and cleanup.",
-        "testStrategy": "Test error handling for network failures, API errors, and scraping issues. Verify logging captures important events and errors. Test dry-run mode executes without side effects. Verify configuration changes take effect.",
-        "priority": "medium",
+        "description": "Implement comprehensive error handling, logging, and configurable settings across all layers of the hexagonal architecture",
+        "status": "pending",
         "dependencies": [
           1,
           2,
@@ -222,13 +734,106 @@
           10,
           11
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Implement error handling and configuration management as cross-cutting concerns in the hexagonal architecture. Create configuration ports and adapters in the driven adapters layer. Implement error handling middleware for driving adapters (CLI, API). Add structured logging throughout all layers with proper abstraction. Create configuration management that can be injected into use cases through dependency inversion. Implement graceful error propagation from driven adapters through use cases to driving adapters. Add dry-run mode support across all layers. Ensure configuration and error handling follow hexagonal principles with proper port/adapter separation.",
+        "testStrategy": "Test error handling propagation across all architectural layers. Verify configuration injection works properly in use cases. Test that driving adapters handle errors gracefully from core domain. Verify logging abstraction works consistently across layers. Test dry-run mode functionality in all adapters. Validate that error handling doesn't violate hexagonal architecture principles.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Configuration Port and Adapter",
+            "description": "Implement configuration management following hexagonal architecture principles",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create IConfigurationPort interface in core/ports/driven. Implement ConfigurationAdapter in infrastructure/adapters/driven. Support environment variables, config files, and runtime configuration. Ensure configuration can be injected into use cases.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Logging Port and Adapter",
+            "description": "Create logging abstraction that works across all architectural layers",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create ILoggerPort interface in core/ports/driven. Implement LoggerAdapter in infrastructure/adapters/driven. Support structured logging with different levels. Ensure logging can be used in use cases without coupling to specific implementation.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add Error Handling Middleware for Driving Adapters",
+            "description": "Implement consistent error handling in CLI and API adapters",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create error handling middleware for CLI adapter that catches and formats errors appropriately. Add error handling for API adapter (if applicable). Ensure errors from use cases are properly translated for each driving adapter interface.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Domain Error Types",
+            "description": "Create domain-specific error types in the core layer",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Define custom error types in core/domain/errors. Include ScrapingError, ConfigurationError, ValidationError, etc. Ensure errors carry meaningful context and can be properly handled by adapters.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add Error Handling in Use Cases",
+            "description": "Implement proper error handling and logging in all use cases",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Add try-catch blocks in use cases with proper error transformation. Use injected logger port for structured logging. Ensure errors are properly propagated to driving adapters. Add validation and business rule error handling.",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Error Handling in Driven Adapters",
+            "description": "Add comprehensive error handling in all driven adapters",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Add error handling in WebScrapingAdapter for network failures, parsing errors, etc. Implement error handling in DatabaseAdapter for connection issues, query failures. Add error handling in NotificationAdapter for delivery failures. Ensure all errors are properly logged and transformed to domain errors.",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Add Configuration Support for Dry-Run Mode",
+            "description": "Implement dry-run mode configuration across all layers",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Add dry-run configuration option that can be injected into use cases. Modify driven adapters to support dry-run mode (no actual scraping, database writes, notifications). Ensure dry-run mode is properly handled in all use cases and adapters.",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement Graceful Shutdown Handling",
+            "description": "Add proper cleanup and shutdown procedures across all adapters",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Implement graceful shutdown in driving adapters (CLI, API). Add cleanup procedures in driven adapters (close database connections, cleanup browser instances). Ensure proper resource cleanup on application termination.",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Create Configuration Schema and Validation",
+            "description": "Implement configuration validation and schema definition",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Define configuration schema with validation rules. Add configuration validation in ConfigurationAdapter. Ensure invalid configurations are caught early with meaningful error messages. Support configuration hot-reloading if needed.",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Add Integration Tests for Error Scenarios",
+            "description": "Test error handling across all architectural layers",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create integration tests that simulate various error conditions. Test error propagation from driven adapters through use cases to driving adapters. Verify that error handling doesn't break hexagonal architecture principles. Test configuration injection and validation.",
+            "testStrategy": ""
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-08T04:09:43.481Z",
-      "updated": "2025-07-08T11:56:26.942Z",
+      "updated": "2025-07-08T11:58:50.533Z",
       "description": "Tasks for master context"
     }
   }

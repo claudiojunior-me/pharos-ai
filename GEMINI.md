@@ -415,3 +415,17 @@ These commands make AI calls and may take up to a minute:
 ---
 
 _This guide ensures Gemini has immediate access to Task Master's essential functionality for agentic development workflows._
+
+## Project Architecture
+
+This project follows a Hexagonal Architecture (Ports and Adapters) to ensure the core business logic is decoupled from external services and frameworks. This makes the application extensible and testable.
+
+### Key Architectural Decisions:
+
+*   **Hexagonal Architecture:** The core application logic is independent of external services like Medium or Pocket. It communicates through interfaces (Ports), and the concrete implementations for external services are provided through Adapters.
+*   **SOLID Principles:** The design adheres to SOLID principles, promoting a clean and maintainable codebase.
+*   **Dependency Injection:** The project uses `tsyringe` for dependency injection to manage dependencies between different parts of the application.
+*   **Strategy/Adapter Pattern:** This pattern is used for implementing providers for different services (e.g., `MediumProvider`, `PocketProvider`). All providers adhere to the `IProvider` interface.
+*   **Core Interfaces:** The main contracts are `IProvider` for external services and `INlpService` for natural language processing.
+
+For a more detailed explanation of the architecture, please refer to the **Technical Design Document** at `docs/ddt.md`. This document is subject to change and should be consulted for the most up-to-date information.
