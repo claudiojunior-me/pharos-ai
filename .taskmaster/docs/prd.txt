@@ -1,0 +1,91 @@
+### **PRD: Orquestrador de Leitura Pessoal**
+
+  * **Autor:** Gemini
+  * **Data:** 07 de Julho de 2025
+  * **Versão:** 1.0
+
+### 1\. Visão Geral
+
+#### 1.1. O Problema
+
+Leitores ávidos que utilizam o Medium como principal fonte de artigos técnicos e de aprofundamento enfrentam um fluxo de trabalho manual e demorado para consumir esse conteúdo em dispositivos Kindle. Os principais pontos de dor são:
+
+  * A necessidade de acessar uma conta paga para ler o conteúdo completo.
+  * A ausência de um sistema de categorização (tags) pessoal nos artigos salvos.
+  * O processo de conversão de formato, tradução para o português e envio para o dispositivo é inteiramente manual.
+  * A organização dos artigos recebidos no Kindle é inexistente, misturando diversos assuntos.
+
+#### 1.2. Solução Proposta
+
+O **"Orquestrador de Leitura"** é uma aplicação de linha de comando (CLI) desenvolvida em TypeScript/Node.js que automatiza todo o ciclo de vida de um artigo, desde a sua categorização na lista de leitura do Medium até a sua chegada organizada e traduzida no Kindle do usuário.
+
+#### 1.3. Objetivos
+
+  * **V1.0:** Entregar uma ferramenta CLI funcional que automatize a categorização, tradução, sumarização e envio de artigos do Medium para o Kindle, eliminando 95% do trabalho manual.
+
+### 2\. Persona do Usuário
+
+  * **Nome:** Desenvolvedor Curioso
+  * **Perfil:** Profissional de tecnologia com proficiência em JavaScript (Node.js) e Python, que utiliza o Medium para se manter atualizado sobre novas tecnologias e conceitos. Possui uma assinatura paga do Medium e usa um Kindle para leituras focadas e offline. Valoriza a automação para otimizar fluxos de trabalho pessoais.
+
+### 3\. Requisitos Funcionais (User Stories)
+
+| ID | User Story | Detalhes Técnicos e Critérios de Aceitação |
+| :--- | :--- | :--- |
+| **CLI-01** | **Arquitetura Modular:** Como usuário, quero ter comandos distintos para `tag` e `export` para que eu possa gerenciar a categorização e o envio dos meus artigos de forma independente e em momentos diferentes. | - A aplicação deve ser executável via `npx ts-node src/index.ts`.\<br\>- Deve aceitar o comando `tag` para iniciar o fluxo de categorização.\<br\>- Deve aceitar o comando `export` com os parâmetros `--theme` e `--count` para o fluxo de exportação. |
+| **AUTH-01**| **Autenticação Segura:** Como usuário, quero que a aplicação faça login na minha conta do Medium de forma automatizada e segura para acessar artigos pagos. | - As credenciais (usuário/senha) não devem estar no código-fonte.\<br\>- A aplicação deve usar variáveis de ambiente (`.env`) para carregar as credenciais.\<br\>- A sessão de login (cookies) deve ser mantida pelo Puppeteer/Playwright durante a execução. |
+| **STATE-01**| **Persistência de Estado:** Como usuário, quero que a aplicação mantenha um registro local dos meus artigos e suas tags para que não precise re-processar artigos já categorizados. | - A aplicação deve criar e gerenciar um arquivo `articles.json`.\<br\>- A estrutura do objeto de artigo deve conter `url`, `title`, `tags[]`, e `processed: boolean`.\<br\>- A leitura e escrita no arquivo deve ser robusta. |
+| **TAG-01** | **Categorização com IA (`tag`):** Como usuário do comando `tag`, quero que a aplicação identifique novos artigos na minha lista de leitura e use uma IA para gerar tags relevantes para eles. | - O comando deve comparar a lista do Medium com o `articles.json` para encontrar novos artigos.\<br\>- Para cada novo artigo, deve extrair seu texto completo.\<br\>- Deve enviar o texto para uma API de LLM (Gemini/OpenAI) com um prompt específico para gerar um array JSON de tags.\<br\>- As tags geradas devem ser salvas no `articles.json` junto ao respectivo artigo. |
+| **EXP-01** | **Exportação Seletiva (`export`):** Como usuário do comando `export`, quero poder selecionar artigos por tema e quantidade para processamento. | - O comando deve ler o `articles.json` como fonte de dados.\<br\>- Deve filtrar os artigos com base nos parâmetros `--theme` e `--count`.\<br\>- Apenas artigos com `"processed": false` devem ser considerados para exportação. |
+| **PROC-01**| **Pipeline de Processamento:** Como usuário, quero que cada artigo exportado seja convertido para Markdown, traduzido para Português do Brasil e sumarizado. | - **Conversão:** O HTML do corpo do artigo deve ser convertido para um Markdown limpo.\<br\>- **Tradução:** O texto em Markdown deve ser enviado para uma API de tradução.\<br\>- **Sumarização (TL;DR):** O texto traduzido deve ser enviado para uma API de LLM para gerar um resumo conciso. |
+| **KIND-01**| **Envio e Organização no Kindle:** Como usuário, quero que o artigo processado seja enviado para meu Kindle e que eu possa organizá-lo facilmente por tema. | - O artigo final (resumo + texto traduzido) deve ser enviado como anexo de e-mail para o endereço "Send to Kindle" do usuário.\<br\>- O **título do documento enviado** deve ser prefixado com a tag do tema. Exemplo: `[rust] - Título do Artigo`. |
+| **CLEAN-01**| **Limpeza Pós-Exportação:** Como usuário, quero que um artigo enviado com sucesso seja removido da minha lista de leitura do Medium e marcado como processado. | - Após o envio bem-sucedido, a aplicação deve automatizar o clique no botão "remover da lista" na UI do Medium.\<br\>- O status do artigo no `articles.json` deve ser atualizado para `"processed": true`. |
+
+### 4\. Requisitos Não-Funcionais
+
+  * **Segurança:** As credenciais do Medium e chaves de API de serviços (LLM, E-mail) devem ser gerenciadas exclusivamente por variáveis de ambiente.
+  * **Robustez:** A aplicação deve ter tratamento de erros para falhas de rede, falhas de login, mudanças na UI do Medium (seletores quebrados) e erros de API.
+  * **Performance:** Para evitar bloqueios por parte do Medium, a aplicação deve incluir delays configuráveis entre requisições HTTP e ações de automação no navegador.
+  * **Manutenibilidade:** O código-fonte deve seguir a estrutura modular proposta (pastas `commands`, `services`, `types`), com responsabilidades bem definidas.
+
+### 5\. Escopo
+
+#### 5.1. Na Versão 1.0
+
+  * Todas as funcionalidades descritas nas User Stories (CLI-01 a CLEAN-01).
+  * Suporte exclusivo para a plataforma Medium.com.
+  * Tradução para um único idioma alvo: Português do Brasil.
+
+#### 5.2. Fora da Versão 1.0
+
+  * Interface Gráfica de Usuário (GUI).
+  * Suporte a outras plataformas (ex: Pocket, Instapaper, blogs genéricos).
+  * Gerenciamento direto de coleções no Kindle (tecnicamente inviável via e-mail).
+  * Painel de análise de leitura.
+
+### 6\. Tech Stack Proposto
+
+  * **Linguagem:** TypeScript
+  * **Ambiente:** Node.js
+  * **CLI Framework:** `yargs`
+  * **Automação de Navegador:** `Puppeteer`
+  * **Conversão HTML -\> Markdown:** `turndown`
+  * **Cliente de E-mail:** `Nodemailer`
+  * **APIs de IA (LLM):** Google AI (Gemini) ou OpenAI
+
+### 7\. Métricas de Sucesso
+
+  * **Taxa de Sucesso de Execução:** \>95% de execuções dos comandos `tag` e `export` sem erros fatais.
+  * **Qualidade da Automação:** Precisão na geração de tags e na qualidade da tradução/resumo, medida pela satisfação do usuário.
+  * **Eficiência:** Redução do tempo gasto no processo manual de mais de 15 minutos por artigo para menos de 1 minuto de execução de script.
+
+### 8\. Riscos e Mitigações
+
+| Risco | Probabilidade | Impacto | Mitigação |
+| :--- | :--- | :--- | :--- |
+| Mudanças na UI do Medium quebram os seletores do scraper. | Alta | Alto | Manter os seletores em um arquivo de configuração para fácil atualização. Implementar testes de automação básicos. |
+| Bloqueio de IP ou conta por scraping agressivo. | Média | Alto | Implementar delays realistas e randomizados entre as ações. Rotacionar User-Agents. |
+| Custos com APIs de LLM e Tradução excedem o esperado. | Média | Médio | Implementar um "dry run" mode. O comando `tag` só processa artigos novos, limitando o uso. Permitir configuração de limites diários. |
+| Qualidade da tag/resumo da IA é baixa. | Baixa | Médio | Refinar e aprimorar os prompts enviados à API do LLM. Permitir que o prompt seja configurável. |
+
+-----

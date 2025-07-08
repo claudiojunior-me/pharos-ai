@@ -1,0 +1,235 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Structure and Dependencies",
+        "description": "Initialize TypeScript/Node.js project with required dependencies and folder structure",
+        "details": "Create package.json with TypeScript, yargs, puppeteer, turndown, nodemailer dependencies. Setup tsconfig.json for TypeScript compilation. Create folder structure: src/commands/, src/services/, src/types/. Initialize .env.example file for environment variables. Setup .gitignore to exclude node_modules and .env files.",
+        "testStrategy": "Verify project compiles with 'npx tsc'. Test CLI entry point with 'npx ts-node src/index.ts --help'. Ensure all dependencies install correctly.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Node.js Project and Package Configuration",
+            "description": "Create the initial Node.js project structure with package.json containing all required dependencies for the TypeScript CLI application",
+            "dependencies": [],
+            "details": "Run 'npm init -y' to create package.json. Add dependencies: typescript, @types/node, yargs, @types/yargs, puppeteer, @types/puppeteer, turndown, nodemailer, @types/nodemailer. Add devDependencies: ts-node, nodemon. Configure scripts for build, start, and dev commands. Set main entry point to 'dist/index.js' and add 'bin' field for CLI executable.",
+            "status": "done",
+            "testStrategy": "Verify package.json structure and run 'npm install' to ensure all dependencies resolve correctly"
+          },
+          {
+            "id": 2,
+            "title": "Configure TypeScript Compilation Settings",
+            "description": "Setup TypeScript configuration file with appropriate compiler options for Node.js CLI application",
+            "dependencies": [
+              1
+            ],
+            "details": "Create tsconfig.json with target 'ES2020', module 'commonjs', outDir 'dist', rootDir 'src', strict mode enabled, esModuleInterop true, skipLibCheck true, forceConsistentCasingInFileNames true. Include 'src/**/*' and exclude 'node_modules', 'dist'. Add declaration true for type definitions generation.",
+            "status": "done",
+            "testStrategy": "Run 'npx tsc --noEmit' to validate TypeScript configuration without compilation errors"
+          },
+          {
+            "id": 3,
+            "title": "Create Project Folder Structure",
+            "description": "Establish the organized directory structure for the CLI application with separation of concerns",
+            "dependencies": [
+              2
+            ],
+            "details": "Create src/ directory as root source folder. Inside src/, create subdirectories: commands/ (for CLI command handlers), services/ (for business logic like email, web scraping), types/ (for TypeScript type definitions), utils/ (for helper functions). Create dist/ directory for compiled JavaScript output.",
+            "status": "done",
+            "testStrategy": "Verify all directories exist and are properly nested using 'tree' command or directory listing"
+          },
+          {
+            "id": 4,
+            "title": "Setup Environment Configuration Template",
+            "description": "Create environment variable template file for configuration management",
+            "dependencies": [
+              3
+            ],
+            "details": "Create .env.example file in project root with placeholder variables: EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS, EMAIL_FROM, PUPPETEER_HEADLESS, LOG_LEVEL. Add comments explaining each variable's purpose. Include instructions for copying to .env file for local development.",
+            "status": "done",
+            "testStrategy": "Validate .env.example contains all necessary configuration variables with clear documentation"
+          },
+          {
+            "id": 5,
+            "title": "Configure Git Ignore and Version Control",
+            "description": "Setup version control exclusions and prepare project for Git repository initialization",
+            "dependencies": [
+              4
+            ],
+            "details": "Create .gitignore file excluding: node_modules/, dist/, .env, *.log, .DS_Store, coverage/, .nyc_output/. Add IDE-specific exclusions for .vscode/, .idea/. Include OS-specific exclusions. Initialize git repository with 'git init' and create initial commit with project structure.",
+            "status": "in-progress",
+            "testStrategy": "Verify .gitignore properly excludes sensitive files by checking 'git status' shows only intended files for tracking"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement CLI Framework with Yargs",
+        "description": "Create main CLI interface with tag and export commands using yargs framework",
+        "details": "Setup src/index.ts as main entry point using yargs. Implement command structure for 'tag' command and 'export' command with --theme and --count parameters. Add help text and command validation. Create command handlers in src/commands/tag.ts and src/commands/export.ts.",
+        "testStrategy": "Test CLI commands: 'npx ts-node src/index.ts tag', 'npx ts-node src/index.ts export --theme rust --count 5'. Verify help text displays correctly and parameter validation works.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement State Management Service",
+        "description": "Create articles.json persistence layer for tracking article state and tags",
+        "details": "Create src/services/state.ts with functions to read/write articles.json. Define Article interface in src/types/article.ts with properties: url, title, tags[], processed boolean. Implement loadArticles(), saveArticles(), addArticle(), updateArticle() functions with error handling for file operations.",
+        "testStrategy": "Unit tests for state operations. Test file creation, reading empty/existing files, adding articles, updating processed status. Verify JSON structure matches Article interface.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Medium Authentication Service",
+        "description": "Create secure authentication service for Medium using Puppeteer with environment variables",
+        "details": "Create src/services/auth.ts using Puppeteer for Medium login. Load credentials from process.env.MEDIUM_USERNAME and MEDIUM_PASSWORD. Implement login flow with proper error handling. Maintain session cookies throughout execution. Add User-Agent rotation and realistic delays to avoid detection.",
+        "testStrategy": "Test login with valid credentials from .env file. Verify session persistence by accessing a paid article. Test error handling for invalid credentials and network failures.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Medium Scraping Service",
+        "description": "Create service to extract reading list and article content from Medium",
+        "details": "Create src/services/medium.ts with functions to scrape reading list and extract article content. Implement getReadingList() to fetch all articles from user's reading list. Implement getArticleContent(url) to extract full article text. Use configurable CSS selectors stored in config file. Add delays and error handling for scraping operations.",
+        "testStrategy": "Test reading list extraction returns array of articles with URLs and titles. Test article content extraction returns clean text. Verify scraping works with both free and paid articles.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement AI Tagging Service",
+        "description": "Create service to generate tags for articles using LLM API (Gemini/OpenAI)",
+        "details": "Create src/services/ai.ts with generateTags(articleText) function. Integrate with Google AI (Gemini) or OpenAI API using environment variables for API keys. Design prompt to analyze article content and return JSON array of relevant tags. Implement error handling and retry logic for API calls. Add rate limiting to avoid API quota issues.",
+        "testStrategy": "Test tag generation with sample article text. Verify returned tags are relevant and in correct JSON format. Test error handling for API failures and invalid responses.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Tag Command Logic",
+        "description": "Complete tag command to identify new articles and generate tags using AI",
+        "details": "Implement src/commands/tag.ts logic: 1) Load existing articles from state, 2) Fetch current reading list from Medium, 3) Identify new articles not in state, 4) Extract content for new articles, 5) Generate tags using AI service, 6) Save updated articles to state. Add progress indicators and error handling.",
+        "testStrategy": "Test tag command identifies new articles correctly. Verify tags are generated and saved to articles.json. Test handling of articles already processed. Verify command completes without errors.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Content Processing Pipeline",
+        "description": "Create services for HTML to Markdown conversion, translation, and summarization",
+        "details": "Create src/services/processor.ts with functions: 1) convertToMarkdown(html) using turndown library, 2) translateText(text) using translation API (Google Translate), 3) generateSummary(text) using LLM API for TL;DR generation. Load API keys from environment variables. Implement error handling and retry logic.",
+        "testStrategy": "Test HTML to Markdown conversion produces clean output. Test translation from English to Portuguese. Test summary generation creates concise TL;DR. Verify all functions handle errors gracefully.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement Email Service for Kindle Delivery",
+        "description": "Create service to send processed articles to Kindle via email using Nodemailer",
+        "details": "Create src/services/email.ts using Nodemailer. Configure SMTP settings from environment variables (EMAIL_HOST, EMAIL_USER, EMAIL_PASS). Implement sendToKindle(title, content, theme) function. Format email with theme prefix in subject line: '[theme] - Article Title'. Attach content as .txt or .mobi file. Add delivery confirmation.",
+        "testStrategy": "Test email sending to Kindle address with sample content. Verify theme prefix appears in subject. Test error handling for SMTP failures. Confirm articles appear on Kindle device.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Implement Export Command Logic",
+        "description": "Complete export command to process and send articles based on theme and count filters",
+        "details": "Implement src/commands/export.ts logic: 1) Load articles from state, 2) Filter by theme and count parameters, 3) Select only unprocessed articles, 4) For each article: convert to Markdown, translate, summarize, 5) Send to Kindle via email, 6) Update processed status in state. Add progress tracking and error recovery.",
+        "testStrategy": "Test export command filters articles correctly by theme and count. Verify processing pipeline works end-to-end. Test articles are marked as processed after successful export. Verify error handling for failed exports.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          8,
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Implement Article Cleanup Service",
+        "description": "Create service to remove articles from Medium reading list after successful export",
+        "details": "Create src/services/cleanup.ts with removeFromReadingList(articleUrl) function. Use Puppeteer to navigate to article and click remove button. Implement robust selector strategy with fallbacks. Add confirmation of removal. Integrate cleanup into export command after successful Kindle delivery.",
+        "testStrategy": "Test article removal from reading list works correctly. Verify article no longer appears in reading list after removal. Test error handling when remove button not found or action fails.",
+        "priority": "low",
+        "dependencies": [
+          4,
+          10
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Add Error Handling and Configuration Management",
+        "description": "Implement comprehensive error handling, logging, and configurable settings",
+        "details": "Create src/services/config.ts for managing CSS selectors and delays. Implement src/services/logger.ts for structured logging. Add try-catch blocks throughout application with meaningful error messages. Create configuration file for selectors, delays, and API limits. Add dry-run mode for testing. Implement graceful shutdown and cleanup.",
+        "testStrategy": "Test error handling for network failures, API errors, and scraping issues. Verify logging captures important events and errors. Test dry-run mode executes without side effects. Verify configuration changes take effect.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-08T04:09:43.481Z",
+      "updated": "2025-07-08T11:56:26.942Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
