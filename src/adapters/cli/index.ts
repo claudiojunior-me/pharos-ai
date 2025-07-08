@@ -10,6 +10,8 @@ import { ExportContentUseCase } from '../../application/usecases/ExportContentUs
 import { JsonArticleRepository } from '../../adapters/driven/JsonArticleRepository';
 import { IAuthenticationService } from '../../application/ports/IAuthenticationService';
 import { MediumAuthenticationAdapter } from '../../adapters/driven/MediumAuthenticationAdapter';
+import { IArticleContentService } from '../../application/ports/IArticleContentService';
+import { MediumScraper } from '../../adapters/driven/MediumScraper';
 
 container.register<IArticleRepository>('IArticleRepository', {
   useClass: JsonArticleRepository,
@@ -17,6 +19,10 @@ container.register<IArticleRepository>('IArticleRepository', {
 
 container.register<IAuthenticationService>('IAuthenticationService', {
   useClass: MediumAuthenticationAdapter,
+});
+
+container.register<IArticleContentService>('IArticleContentService', {
+  useClass: MediumScraper,
 });
 
 container.register<ICliService>('TagContentUseCase', {
