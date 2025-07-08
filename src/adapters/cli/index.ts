@@ -1,5 +1,18 @@
+import 'reflect-metadata';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { container } from 'tsyringe';
+
+import { ICliService } from '../../application/ports/ICliService';
+import { TagContentUseCase } from '../../application/usecases/TagContentUseCase';
+import { ExportContentUseCase } from '../../application/usecases/ExportContentUseCase';
+
+container.register<ICliService>('TagContentUseCase', {
+  useClass: TagContentUseCase,
+});
+container.register<ICliService>('ExportContentUseCase', {
+  useClass: ExportContentUseCase,
+});
 
 export const cli = yargs(hideBin(process.argv))
   .command(
@@ -16,9 +29,9 @@ export const cli = yargs(hideBin(process.argv))
           type: 'string',
         });
     },
-    (argv) => {
-      console.log(`Tagging from ${argv.source} to ${argv.destination}`);
-      // TODO: Implement tagging logic
+    async (argv) => {
+      const tagService = container.resolve<ICliService>('TagContentUseCase');
+      await tagService.tag(argv.source as string, argv.destination as string);
     }
   )
   .command(
@@ -41,9 +54,9 @@ export const cli = yargs(hideBin(process.argv))
           description: 'Number of items to export',
         });
     },
-    (argv) => {
-      console.log(`Exporting from ${argv.source} with theme ${argv.theme || 'default'} and count ${argv.count || 'all'}`);
-      // TODO: Implement export logic
+    async (argv) => {
+      const exportService = container.resolve<ICliService>('ExportContentUseCase');
+      await exportService.export(argv.source as string, argv.theme as string, argv.count as number);
     }
   )
   .demandCommand(1, 'You need at least one command before moving on')
@@ -51,4 +64,9 @@ export const cli = yargs(hideBin(process.argv))
   .alias('help', 'h')
   .version()
   .alias('version', 'v')
+  .fail((msg, err, yargs) => {
+    if (err) throw err; // preserve stack
+    console.error('Error:', msg);
+    process.exit(1);
+  })
   .parse();

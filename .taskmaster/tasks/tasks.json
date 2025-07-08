@@ -70,7 +70,7 @@
         "id": 2,
         "title": "Implement CLI Framework with Yargs",
         "description": "Create main CLI interface with tag and export commands using yargs framework as an adapter in the Hexagonal Architecture. The CLI should act as a driving adapter that interacts with the application core through well-defined interfaces, following the Dependency Inversion Principle.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -91,7 +91,7 @@
             "id": 2,
             "title": "Define CLI command interfaces and abstractions",
             "description": "Create interfaces that the CLI adapter will use to interact with use cases, ensuring dependency inversion",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -100,7 +100,7 @@
             "id": 3,
             "title": "Implement yargs configuration and command routing",
             "description": "Set up yargs in src/index.ts with proper command routing that delegates to use case interfaces",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -109,7 +109,7 @@
             "id": 4,
             "title": "Create tag command CLI adapter",
             "description": "Implement tag command handler that invokes tag use case through defined interfaces",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -118,7 +118,7 @@
             "id": 5,
             "title": "Create export command CLI adapter",
             "description": "Implement export command handler with --theme and --count parameters that invokes export use case through defined interfaces",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -127,7 +127,7 @@
             "id": 6,
             "title": "Implement dependency injection for CLI commands",
             "description": "Set up dependency injection mechanism to provide use case implementations to CLI command handlers",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -136,7 +136,7 @@
             "id": 7,
             "title": "Add CLI error handling and validation",
             "description": "Implement proper error handling that translates application core errors to user-friendly CLI messages",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "",
             "testStrategy": ""
@@ -833,7 +833,7 @@
     ],
     "metadata": {
       "created": "2025-07-08T04:09:43.481Z",
-      "updated": "2025-07-08T16:25:16.253Z",
+      "updated": "2025-07-08T16:27:53.151Z",
       "description": "Tasks for master context"
     }
   }
