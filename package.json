@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/translate": "^9.1.0",
     "@google/generative-ai": "^0.24.1",
     "nodemailer": "^6.9.4",
     "puppeteer": "^21.11.0",
