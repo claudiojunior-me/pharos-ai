@@ -8,9 +8,15 @@ import { IArticleRepository } from '../../application/ports/IArticleRepository';
 import { TagContentUseCase } from '../../application/usecases/TagContentUseCase';
 import { ExportContentUseCase } from '../../application/usecases/ExportContentUseCase';
 import { JsonArticleRepository } from '../../adapters/driven/JsonArticleRepository';
+import { IAuthenticationService } from '../../application/ports/IAuthenticationService';
+import { MediumAuthenticationAdapter } from '../../adapters/driven/MediumAuthenticationAdapter';
 
 container.register<IArticleRepository>('IArticleRepository', {
   useClass: JsonArticleRepository,
+});
+
+container.register<IAuthenticationService>('IAuthenticationService', {
+  useClass: MediumAuthenticationAdapter,
 });
 
 container.register<ICliService>('TagContentUseCase', {
