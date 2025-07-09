@@ -197,7 +197,7 @@
         "id": 4,
         "title": "Implement Medium Authentication Service",
         "description": "Create secure authentication service for Medium as a driven adapter in Hexagonal Architecture, implementing a defined port interface to provide authentication capabilities to the core application",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -247,7 +247,7 @@
         "id": 5,
         "title": "Implement Medium Scraping Service",
         "description": "Create a Medium scraping service as a driven adapter that implements the article content port interface, following Hexagonal Architecture principles and the Dependency Inversion Principle",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           4
         ],
@@ -259,7 +259,7 @@
             "id": 1,
             "title": "Define ArticleContentPort interface",
             "description": "Create the port interface that defines the contract for article content providers",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Create src/ports/driven/article-content-port.ts with interface defining getReadingList() and getArticleContent(url) methods. This interface will be implemented by the Medium scraper and any other article content adapters.",
             "testStrategy": ""
@@ -268,7 +268,7 @@
             "id": 2,
             "title": "Implement Medium scraper as driven adapter",
             "description": "Create the concrete implementation of the ArticleContentPort using Medium scraping",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Create src/adapters/driven/medium-scraper.ts that implements ArticleContentPort. Include getReadingList() to fetch articles from user's reading list and getArticleContent(url) to extract full article text. Use configurable CSS selectors and include proper error handling and delays.",
             "testStrategy": ""
@@ -277,7 +277,7 @@
             "id": 3,
             "title": "Configure dependency injection for the adapter",
             "description": "Set up dependency injection to wire the Medium scraper to the core application",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Configure the dependency injection container to bind the ArticleContentPort interface to the MediumScraper implementation. Ensure the core application receives the adapter through constructor injection without knowing the concrete type.",
             "testStrategy": ""
@@ -286,7 +286,7 @@
             "id": 4,
             "title": "Add configuration for CSS selectors",
             "description": "Create configuration file for Medium-specific scraping selectors",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Add Medium scraping configuration to config file with CSS selectors for article content, titles, reading list items, etc. Make selectors easily configurable for maintenance.",
             "testStrategy": ""
@@ -295,7 +295,7 @@
             "id": 5,
             "title": "Implement error handling and rate limiting",
             "description": "Add robust error handling and rate limiting to the scraper",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Implement retry logic, timeout handling, and rate limiting in the Medium scraper. Add proper error types that can be handled by the core application through the port interface.",
             "testStrategy": ""
@@ -833,7 +833,7 @@
     ],
     "metadata": {
       "created": "2025-07-08T04:09:43.481Z",
-      "updated": "2025-07-08T16:38:10.853Z",
+      "updated": "2025-07-08T16:40:48.242Z",
       "description": "Tasks for master context"
     }
   }
