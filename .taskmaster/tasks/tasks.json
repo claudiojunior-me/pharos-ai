@@ -247,7 +247,7 @@
         "id": 5,
         "title": "Implement Medium Scraping Service",
         "description": "Create a Medium scraping service as a driven adapter that implements the article content port interface, following Hexagonal Architecture principles and the Dependency Inversion Principle",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           4
         ],
@@ -306,7 +306,7 @@
         "id": 6,
         "title": "Implement AI Tagging Service",
         "description": "Create AI tagging service as a driven adapter following Hexagonal Architecture principles. Implement a port (interface) for tagging capabilities and a concrete adapter that integrates with LLM APIs (Gemini/OpenAI), ensuring the core application depends only on the abstraction.",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           1
         ],
@@ -318,7 +318,7 @@
             "id": 1,
             "title": "Define TaggingPort interface",
             "description": "Create the port interface that defines the contract for tagging services",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Create src/core/ports/TaggingPort.ts with generateTags(articleText: string): Promise<string[]> method signature. Include proper TypeScript types and JSDoc documentation.",
             "testStrategy": ""
@@ -327,7 +327,7 @@
             "id": 2,
             "title": "Implement AiTaggingAdapter",
             "description": "Create concrete implementation of TaggingPort using AI services",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Implement src/adapters/driven/ai/AiTaggingAdapter.ts that implements TaggingPort interface. Integrate with Google AI (Gemini) or OpenAI API using environment variables for configuration.",
             "testStrategy": ""
@@ -336,7 +336,7 @@
             "id": 3,
             "title": "Design AI prompts for tag generation",
             "description": "Create effective prompts for analyzing article content and generating relevant tags",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Design prompts that instruct the AI to analyze article content and return a JSON array of relevant, concise tags. Include examples and constraints in the prompt.",
             "testStrategy": ""
@@ -345,7 +345,7 @@
             "id": 4,
             "title": "Implement error handling and resilience",
             "description": "Add comprehensive error handling, retry logic, and rate limiting",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Implement retry logic for transient failures, proper error handling for API errors, and rate limiting to respect API quotas. Include circuit breaker pattern if needed.",
             "testStrategy": ""
@@ -354,7 +354,7 @@
             "id": 5,
             "title": "Configure dependency injection",
             "description": "Set up dependency injection to bind TaggingPort to AiTaggingAdapter",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Configure the DI container to inject AiTaggingAdapter when TaggingPort is requested. Ensure core domain services receive the port interface, not the concrete implementation.",
             "testStrategy": ""
@@ -363,7 +363,7 @@
             "id": 6,
             "title": "Create unit tests for TaggingPort contract",
             "description": "Test the interface contract with mock implementations",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Create tests that verify the TaggingPort interface contract works correctly with mock implementations, ensuring core domain logic is testable without external dependencies.",
             "testStrategy": ""
@@ -372,7 +372,7 @@
             "id": 7,
             "title": "Create integration tests for AiTaggingAdapter",
             "description": "Test the concrete AI adapter implementation",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "details": "Create integration tests for AiTaggingAdapter with real or mocked AI API calls. Test tag generation quality, error scenarios, and rate limiting behavior.",
             "testStrategy": ""
@@ -833,7 +833,7 @@
     ],
     "metadata": {
       "created": "2025-07-08T04:09:43.481Z",
-      "updated": "2025-07-08T16:40:48.242Z",
+      "updated": "2025-07-08T16:51:35.097Z",
       "description": "Tasks for master context"
     }
   }
